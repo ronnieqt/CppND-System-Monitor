@@ -73,9 +73,9 @@ void NCursesDisplay::DisplayProcesses(std::vector<Process>& processes,
     //You need to take care of the fact that the cpu utilization has already been multiplied by 100.
     // Clear the line
     mvwprintw(window, ++row, pid_column, (string(window->_maxx-2, ' ').c_str()));
-    
+
     mvwprintw(window, row, pid_column, "%s", to_string(processes[i].Pid()).c_str());
-    mvwprintw(window, row, user_column, "%s", processes[i].User().c_str());
+    mvwprintw(window, row, user_column, "%s", processes[i].User().substr(0,6).c_str());  // truncate long user name
     float cpu = processes[i].CpuUtilization() * 100;
     mvwprintw(window, row, cpu_column, "%s", to_string(cpu).substr(0, 4).c_str());
     mvwprintw(window, row, ram_column, "%s", processes[i].Ram().c_str());
