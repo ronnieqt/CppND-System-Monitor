@@ -98,7 +98,7 @@ float LinuxParser::MemoryUtilization()
         mem["free"].first = true;
         mem["free"].second = value;
       }
-      if (mem["total"].second && mem["free"].second) {
+      if (mem["total"].first && mem["free"].first) {
         break;
       }
     }
