@@ -3,6 +3,9 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <utility>
+#include <iostream>  // TMP: for dev
 
 #include "linux_parser.h"
 
@@ -12,7 +15,8 @@ using std::to_string;
 using std::vector;
 
 // DONE: An example of how to read data from the filesystem
-string LinuxParser::OperatingSystem() {
+string LinuxParser::OperatingSystem()
+{
   string line;
   string key;
   string value;
@@ -35,7 +39,8 @@ string LinuxParser::OperatingSystem() {
 }
 
 // DONE: An example of how to read data from the filesystem
-string LinuxParser::Kernel() {
+string LinuxParser::Kernel()
+{
   string os, kernel, version;
   string line;
   std::ifstream stream(kProcDirectory + kVersionFilename);
@@ -48,7 +53,8 @@ string LinuxParser::Kernel() {
 }
 
 // BONUS: Update this to use std::filesystem
-vector<int> LinuxParser::Pids() {
+vector<int> LinuxParser::Pids()
+{
   vector<int> pids;
   DIR* directory = opendir(kProcDirectory.c_str());
   struct dirent* file;
@@ -67,8 +73,37 @@ vector<int> LinuxParser::Pids() {
   return pids;
 }
 
-// TODO: Read and return the system memory utilization
-float LinuxParser::MemoryUtilization() { return 0.0; }
+// DONE: Read and return the system memory utilization
+float LinuxParser::MemoryUtilization()
+{
+  // name => (init,value)
+  std::unordered_map<std::string, std::pair<bool, float>> mem{
+    {"total", {false, 0.0}},
+    {"free" , {false, 0.0}},
+  };
+  string line, key;
+  float value;
+  std::ifstream filestream(kProcDirectory + kMeminfoFilename);
+  if (filestream.is_open()) {
+    while (std::getline(filestream, line)) {
+      std::replace(line.begin(), line.end(), ':', ' ');
+      std::istringstream linestream(line);
+      linestream >> key >> value;
+      if (key == "MemTotal") {
+        mem["total"].first = true;
+        mem["total"].second = value;
+      }
+      else if (key == "MemFree") {
+        mem["free"].first = true;
+        mem["free"].second = value;
+      }
+      if (mem["total"].second && mem["free"].second) {
+        break;
+      }
+    }
+  }
+  return (mem["total"].second - mem["free"].second) / mem["total"].second;
+}
 
 // TODO: Read and return the system uptime
 long LinuxParser::UpTime() { return 0; }
