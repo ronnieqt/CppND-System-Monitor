@@ -19,6 +19,10 @@ debug:
 	cmake -DCMAKE_BUILD_TYPE=debug .. && \
 	make
 
+.PHONY: test
+test:
+	g++ -std=c++17 -o build/test -I ./include/ test/main.cpp src/linux_parser.cpp src/format.cpp
+
 .PHONY: clean
 clean:
 	rm -rf build
