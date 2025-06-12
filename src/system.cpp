@@ -17,10 +17,10 @@ using std::vector;
 
 You need to properly format the uptime. Refer to the comments mentioned in format. cpp for formatting the uptime.*/
 
-// DONE: Return the system's CPU
+// TODO: Return the system's CPU
 Processor& System::Cpu() { return m_cpu; }
 
-// DONE: Return a container composed of the system's processes
+// TODO: Return a container composed of the system's processes
 vector<Process>& System::Processes() { return m_processes; }
 
 // DONE: Return the system's kernel identifier (string)
