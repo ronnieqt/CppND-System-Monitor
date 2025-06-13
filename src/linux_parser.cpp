@@ -124,7 +124,7 @@ long LinuxParser::UpTime()
 }
 
 // ============================================================
-// CPU (https://knowledge.udacity.com/questions/129844)
+// CPU
 
 // DONE: Read and return CPU utilization
 std::vector<long> LinuxParser::CpuUtilization()
