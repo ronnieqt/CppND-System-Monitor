@@ -21,7 +21,7 @@ debug:
 
 .PHONY: test
 test:
-	g++ -std=c++17 -o build/test -I ./include/ test/main.cpp src/linux_parser.cpp src/format.cpp
+	g++ -std=c++17 -o build/test -I ./include/ test/main.cpp src/processor.cpp src/linux_parser.cpp src/format.cpp
 
 .PHONY: clean
 clean:
