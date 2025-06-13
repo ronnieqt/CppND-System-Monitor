@@ -1,6 +1,7 @@
 #include "processor.h"
 
 // DONE: Return the aggregate CPU utilization
+// Ref: https://stackoverflow.com/questions/23367857/accurate-calculation-of-cpu-usage-given-in-percentage-in-linux
 float Processor::Utilization()
 {
   long total_curr = LinuxParser::Jiffies();
